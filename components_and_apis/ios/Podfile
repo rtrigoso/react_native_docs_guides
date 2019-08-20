@@ -29,6 +29,8 @@ target 'components_and_apis' do
 
   pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
 
+  pod 'RNCViewpager', :path => '../node_modules/@react-native-community/viewpager'
+
   target 'components_and_apisTests' do
     inherit! :search_paths
     # Pods for testing
