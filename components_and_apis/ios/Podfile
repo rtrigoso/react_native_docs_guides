@@ -31,6 +31,8 @@ target 'components_and_apis' do
 
   pod 'RNCViewpager', :path => '../node_modules/@react-native-community/viewpager'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'components_and_apisTests' do
     inherit! :search_paths
     # Pods for testing

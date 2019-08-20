@@ -16,10 +16,12 @@ import {
   DatePickerAndroid,
   TouchableNativeFeedback,
   Text,
-  PermissionsAndroid
+  PermissionsAndroid,
+  StatusBar
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import ViewPager from '@react-native-community/viewpager';
+import { WebView } from 'react-native-webview';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +47,7 @@ class Content extends Component {
       dateMonth: 1,
       dateYear: 1990,
       use_camera: false,
+      statusBarColor: 'lightblue'
     }
   }
 
@@ -95,12 +98,30 @@ class Content extends Component {
     }
   }
 
+  _changeStatusBar(e)
+  {
+    switch(e.nativeEvent.position)
+    {
+      case 1:
+        console.log('steelblue');
+        this.setState({statusBarColor:'lightgreen'});
+      default:
+          console.log('lightblue');
+        this.setState({statusBarColor:'lightblue'});
+    }
+  }
+
   render() {
+    StatusBar.setBackgroundColor(this.state.statusBarColor, true);
+
     return (
       <ViewPager
         style={{flex:1}}
-        initialPage={0}>
+        initialPage={0}
+        onPageSelected={this._changeStatusBar.bind(this)}
+      >
         <View style={{flex:1}}>
+          <StatusBar barStyle="default" />
           <Picker
             selectedValue={this.state.language}
             onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}
@@ -137,6 +158,12 @@ class Content extends Component {
               }
             </View>
           </TouchableNativeFeedback>
+        </View>
+        <View style={{flex:1}}>
+          <WebView
+            source={{uri: 'https://github.com/facebook/react-native'}}
+            style={{marginTop: 20}}
+          />
         </View>
       </ViewPager>
     )
