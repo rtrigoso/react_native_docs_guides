@@ -18,13 +18,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'lightblue'
+  },
+  singleItem: {
+    flex: 1,
+    backgroundColor: 'darkblue',
+    color: 'white',
+    marginBottom: 5,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
 
 class SingleItem extends Component {
+  shouldComponentUpdate() {
+    return false
+  }
+  
   render() {
     return (
-      <View id={this.props.id} ><Text>{this.props.text}</Text></View>
+      <Text id={this.props.id} style={styles.singleItem} >{this.props.text}</Text>
     );
   }
 }
@@ -59,6 +71,9 @@ class CustomList extends Component {
         data={this.state.data}
         renderItem={({item, index}) => <SingleItem id={index} text={item} />}
         keyExtractor={(item, index) => index.toString()}
+        maxToRenderPerBatch={5}
+        updateCellsBatchingPeriod={25}
+        initialNumToRender={50}
       />
     )
   }
