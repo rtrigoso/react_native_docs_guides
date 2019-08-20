@@ -10,7 +10,8 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Picker
+  Picker,
+  Switch
 } from 'react-native';
 import Slider from '@react-native-community/slider'
 
@@ -32,7 +33,8 @@ class Content extends Component {
   {
     super(props);
     this.state = {
-      language: 'java'
+      language: 'java',
+      switch: false
     }
   }
 
@@ -52,6 +54,12 @@ class Content extends Component {
           maximumValue={1}
           minimumTrackTintColor="#FF00CC"
           maximumTrackTintColor="#000000"
+        />
+        <Switch
+          style={styles.child}
+          trackColor="#00GGCC"
+          onValueChange={value => this.setState({switch: value})}
+          value={this.state.switch}
         />
       </View>
     )
