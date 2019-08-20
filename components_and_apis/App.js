@@ -12,6 +12,7 @@ import {
   View,
   Picker
 } from 'react-native';
+import Slider from '@react-native-community/slider'
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +46,13 @@ class Content extends Component {
             <Picker.Item label="Java" value="java" />
             <Picker.Item label="Javascript" value="js" />
         </Picker>
+        <Slider
+          style={styles.child}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#FF00CC"
+          maximumTrackTintColor="#000000"
+        />
       </View>
     )
   }
