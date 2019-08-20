@@ -15,7 +15,8 @@ import {
   Switch,
   DatePickerAndroid,
   TouchableNativeFeedback,
-  Text
+  Text,
+  PermissionsAndroid
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import ViewPager from '@react-native-community/viewpager';
@@ -42,7 +43,8 @@ class Content extends Component {
       switch: false,
       dateDay: 1,
       dateMonth: 1,
-      dateYear: 1990
+      dateYear: 1990,
+      use_camera: false,
     }
   }
 
@@ -59,6 +61,36 @@ class Content extends Component {
       }
     }
     catch (err) {
+      console.error(err);
+    }
+  }
+
+  async _requestPermissions()
+  {
+    console.log('requesting permissions');
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Testing Camera Permissions Request',
+          message: 'This is for testing purposes.',
+          buttonNeutral: 'Ask me later',
+          buttonNegative: 'No',
+          buttonPositive: 'OK'
+        });
+        
+        console.log(granted);
+        
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          this.state.use_camera = true;
+        }
+        else
+        {
+          console.warn(`failed to get permissions. granted message: ${granted}`);
+        }
+    }
+    catch(err)
+    {
       console.error(err);
     }
   }
@@ -94,6 +126,15 @@ class Content extends Component {
           <TouchableNativeFeedback onPress={this._selectDate.bind(this)}>
             <View style={styles.child} >
               <Text>Click to select: {this.state.dateMonth}-{this.state.dateDay}-{this.state.dateYear}</Text>
+            </View>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={this._requestPermissions.bind(this)}>
+            <View style={styles.child} >
+              {!this.state.use_camera ? 
+                <Text>Click to grant camera permissions</Text>
+                :
+                <Text>camera permissions granted!</Text>
+              }
             </View>
           </TouchableNativeFeedback>
         </View>
